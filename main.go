@@ -6,19 +6,23 @@ import (
 	"c-m3-codin/ordProc/services"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-var orderRepo repository.OrderRepo
+var db *gorm.DB
 
 func init() {
-	db := services.GetConnections("sqlite3")
-	orderRepo = repository.NewOrderRepo(db)
+	db = services.GetConnections("sqlite3")
+
 }
 
 func main() {
+	orderRepo := repository.NewOrderRepo(db)
+	orderHandler := handler.NewOrderhandler(orderRepo)
 
 	r := gin.Default()
 	r.GET("/ping", handler.Ping)
+	r.GET("/order", orderHandler.GetOrders)
 	r.Run() // listen and serve on 0.0.0.0:8080
 
 }
