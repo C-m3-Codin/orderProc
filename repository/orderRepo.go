@@ -1,6 +1,10 @@
 package repository
 
-import "gorm.io/gorm"
+import (
+	"c-m3-codin/ordProc/models"
+
+	"gorm.io/gorm"
+)
 
 type OrderRepo struct {
 	DB *gorm.DB
@@ -23,7 +27,7 @@ func (orderRep OrderRepo) GetOrder(orderId uint) (order gorm.Model, err error) {
 	return
 }
 
-func (orderRep OrderRepo) CreateOrder(order gorm.Model) (err error) {
+func (orderRep OrderRepo) CreateOrder(order models.Order) (err error) {
 
 	result := orderRep.DB.Create(&order)
 	err = result.Error
