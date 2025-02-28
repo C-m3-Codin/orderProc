@@ -5,6 +5,7 @@ import (
 	"c-m3-codin/ordProc/manager"
 	"c-m3-codin/ordProc/repository"
 	"c-m3-codin/ordProc/services"
+	"c-m3-codin/ordProc/workers"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -22,6 +23,8 @@ func main() {
 	orderRepo := repository.NewOrderRepo(db)
 	orderManager := manager.NewOrderhandler(orderRepo, q)
 	orderHandler := handler.NewOrderhandler(orderManager)
+	workerPool := workers.NewWorkerPool(1000, q, orderRepo)
+	workerPool.StartCreateOrderWorkers()
 
 	r := gin.Default()
 	r.GET("/ping", handler.Ping)
