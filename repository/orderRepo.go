@@ -2,6 +2,7 @@ package repository
 
 import (
 	"c-m3-codin/ordProc/models"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -19,10 +20,11 @@ func NewOrderRepo(db *gorm.DB) OrderRepo {
 	return or
 }
 
-func (orderRep OrderRepo) GetOrder(orderId uint) (order models.Order, err error) {
-
+func (orderRep OrderRepo) GetOrder(orderId string) (order models.Order, err error) {
+	fmt.Println("got here")
 	order.ID = orderId
-	err = orderRep.DB.First(order).Error
+	fmt.Println(order)
+	err = orderRep.DB.First(&order).Error
 
 	return
 }
@@ -31,6 +33,5 @@ func (orderRep OrderRepo) CreateOrder(order models.Order) (err error) {
 
 	result := orderRep.DB.Create(&order)
 	err = result.Error
-
 	return
 }

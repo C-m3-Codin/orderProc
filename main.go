@@ -18,13 +18,15 @@ func init() {
 }
 
 func main() {
+	q := services.NewQueue()
 	orderRepo := repository.NewOrderRepo(db)
-	orderManager := manager.NewOrderhandler(orderRepo)
+	orderManager := manager.NewOrderhandler(orderRepo, q)
 	orderHandler := handler.NewOrderhandler(orderManager)
 
 	r := gin.Default()
 	r.GET("/ping", handler.Ping)
-	r.GET("/order", orderHandler.GetOrders)
+	r.GET("/order/:id", orderHandler.GetOrders)
+	r.POST("/order", orderHandler.PostOrders)
 	r.Run() // listen and serve on 0.0.0.0:8080
 
 }
