@@ -56,6 +56,7 @@ func (wp WorkerPool) ListenForOrders(workerID int) {
 	for ord := range wp.Q.PendingQueue {
 		fmt.Println("Worker", workerID, "received order:", ord)
 		ord.Status = 1
+		ord.OrderProcessingStart = time.Now()
 		err := wp.orderRepo.CreateOrder(ord)
 		if err != nil {
 			ord.Status = 0
@@ -80,8 +81,8 @@ func (wp WorkerPool) ProcccessOrders(workerID int) {
 		sleepDuration := rand.Intn(10) + 1
 		fmt.Println("Gonna take time to proccess order : ", sleepDuration)
 		time.Sleep(time.Duration(sleepDuration) * time.Second)
-
-		err := wp.orderRepo.UpdateOrder(ord.ID)
+		ord.OrderCompleted = time.Now()
+		err := wp.orderRepo.UpdateOrder(ord)
 		if err != nil {
 			fmt.Println("Error Processing order, requeuing:", ord)
 			wp.Q.Processing <- ord

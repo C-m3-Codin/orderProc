@@ -35,8 +35,8 @@ func (orderRep OrderRepo) CreateOrder(order models.Order) (err error) {
 	return
 }
 
-func (OrderRepo OrderRepo) UpdateOrder(orderid string) (err error) {
-	err = OrderRepo.DB.Model(&models.Order{}).Where("id = ?", orderid).Update("status", 2).Error
+func (OrderRepo OrderRepo) UpdateOrder(order models.Order) (err error) {
+	err = OrderRepo.DB.Model(&models.Order{}).Where("id = ?", order.ID).Updates(models.Order{Status: 2, OrderCompleted: order.OrderCompleted}).Error
 	return
 }
 

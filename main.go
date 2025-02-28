@@ -27,6 +27,7 @@ func main() {
 	workerPool := workers.NewWorkerPool(1000, q, orderRepo)
 	workerPool.StartCreateOrderWorkers()
 	workerPool.StartProccessOrderWorkers()
+	orderManager.LoadUpUnproccessed()
 
 	r := gin.Default()
 	r.GET("/ping", handler.Ping)
