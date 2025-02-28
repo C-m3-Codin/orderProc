@@ -15,6 +15,18 @@ func NewOrderRepo(db *gorm.DB) OrderRepo {
 	return or
 }
 
-func (order OrderRepo) GetOrder(orderId string) {
+func (orderRep OrderRepo) GetOrder(orderId uint) (order gorm.Model, err error) {
+
+	order.ID = orderId
+	err = orderRep.DB.First(order).Error
+
+	return
+}
+
+func (orderRep OrderRepo) CreateOrder(order gorm.Model) (err error) {
+
+	result := orderRep.DB.Create(&order)
+	err = result.Error
+
 	return
 }
