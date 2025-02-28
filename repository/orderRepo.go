@@ -19,7 +19,7 @@ func NewOrderRepo(db *gorm.DB) OrderRepo {
 	return or
 }
 
-func (orderRep OrderRepo) GetOrder(orderId uint) (order gorm.Model, err error) {
+func (orderRep OrderRepo) GetOrder(orderId uint) (order models.Order, err error) {
 
 	order.ID = orderId
 	err = orderRep.DB.First(order).Error

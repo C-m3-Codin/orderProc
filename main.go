@@ -2,6 +2,7 @@ package main
 
 import (
 	"c-m3-codin/ordProc/handler"
+	"c-m3-codin/ordProc/manager"
 	"c-m3-codin/ordProc/repository"
 	"c-m3-codin/ordProc/services"
 
@@ -18,7 +19,8 @@ func init() {
 
 func main() {
 	orderRepo := repository.NewOrderRepo(db)
-	orderHandler := handler.NewOrderhandler(orderRepo)
+	orderManager := manager.NewOrderhandler(orderRepo)
+	orderHandler := handler.NewOrderhandler(orderManager)
 
 	r := gin.Default()
 	r.GET("/ping", handler.Ping)
