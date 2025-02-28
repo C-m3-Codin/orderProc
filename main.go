@@ -19,12 +19,14 @@ func init() {
 }
 
 func main() {
+	services.CacheReceivedOrder = make(map[string]bool)
 	q := services.NewQueue()
 	orderRepo := repository.NewOrderRepo(db)
 	orderManager := manager.NewOrderhandler(orderRepo, q)
 	orderHandler := handler.NewOrderhandler(orderManager)
 	workerPool := workers.NewWorkerPool(1000, q, orderRepo)
 	workerPool.StartCreateOrderWorkers()
+	workerPool.StartProccessOrderWorkers()
 
 	r := gin.Default()
 	r.GET("/ping", handler.Ping)

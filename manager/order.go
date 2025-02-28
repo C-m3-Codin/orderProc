@@ -29,7 +29,7 @@ func (o OrderManager) AcceptOrder(ord models.Order) (orderId string, err error) 
 	orderId = uuid.NewString()
 	ord.ID = orderId
 	// err = o.repo.CreateOrder(ord)
-
+	services.CacheReceivedOrder[orderId] = true
 	o.q.PendingQueue <- ord
 	return
 }

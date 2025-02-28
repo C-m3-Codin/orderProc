@@ -54,6 +54,6 @@ func (ord OrderHandler) PostOrders(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	returnMessage := fmt.Sprint("Received order %s ", orderId)
+	returnMessage := fmt.Sprintf("Received order %s ", orderId)
 	c.JSON(200, returnMessage)
 }
