@@ -69,7 +69,7 @@ func main() {
 	// Seed random number generator
 
 	// Number of requests to send
-	numRequests := 10000
+	numRequests := 1000
 
 	// Channel to collect response times
 	ch := make(chan time.Duration, numRequests)
