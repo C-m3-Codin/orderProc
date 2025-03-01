@@ -8,8 +8,8 @@ type Queue struct {
 }
 
 func NewQueue() (q Queue) {
-	pend := make(chan models.Order, 20000)
-	proc := make(chan models.Order, 20000)
+	pend := make(chan models.Order, 200000)
+	proc := make(chan models.Order, 200000)
 
 	q = Queue{
 		PendingQueue: pend,
