@@ -80,6 +80,11 @@ func main() {
 	// Send requests concurrently
 	for i := 0; i < numRequests; i++ {
 		go SendRequest(GenerateRandomOrder(), ch)
+		if i%200 == 0 {
+			fmt.Println("sleeping", i)
+			time.Sleep(time.Millisecond * 200)
+			fmt.Println("awake", i)
+		}
 	}
 
 	// Collect response times
