@@ -54,7 +54,7 @@ func SendRequest(order Order, ch chan<- time.Duration) {
 	start := time.Now()
 	resp, err := http.Post("http://localhost:8080/order", "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
-		fmt.Println("Error sending request:", err)
+		fmt.Println("Error sending request: \n\n\n", err.Error())
 		ch <- 0
 		return
 	}
@@ -69,7 +69,7 @@ func main() {
 	// Seed random number generator
 
 	// Number of requests to send
-	numRequests := 1000
+	numRequests := 600
 
 	// Channel to collect response times
 	ch := make(chan time.Duration, numRequests)
@@ -80,11 +80,11 @@ func main() {
 	// Send requests concurrently
 	for i := 0; i < numRequests; i++ {
 		go SendRequest(GenerateRandomOrder(), ch)
-		if i%200 == 0 {
-			fmt.Println("sleeping", i)
-			time.Sleep(time.Millisecond * 200)
-			fmt.Println("awake", i)
-		}
+		// if i%200 == 0 {
+		// 	fmt.Println("sleeping", i)
+		// 	time.Sleep(time.Millisecond * 200)
+		// 	fmt.Println("awake", i)
+		// }
 	}
 
 	// Collect response times

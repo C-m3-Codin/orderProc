@@ -8,7 +8,7 @@ type Queue struct {
 }
 
 func NewQueue() (q Queue) {
-	pend := make(chan models.Order, 2000)
+	pend := make(chan models.Order, 10000)
 	proc := make(chan models.Order, 2000)
 
 	q = Queue{
