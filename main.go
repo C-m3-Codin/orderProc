@@ -9,6 +9,7 @@ import (
 	"c-m3-codin/ordProc/workers"
 	"strconv"
 
+	"github.com/alphadose/haxmap"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -21,12 +22,13 @@ func init() {
 }
 
 func main() {
-	services.CacheReceivedOrder = make(map[string]bool)
+	services.CacheReceivedOrders = haxmap.New[string, bool]()
+
 	q := services.NewQueue()
 	orderRepo := repository.NewOrderRepo(db)
 	orderManager := manager.NewOrderhandler(orderRepo, q)
 	orderHandler := handler.NewOrderhandler(orderManager)
-	workerPool := workers.NewWorkerPool(1000, q, orderRepo)
+	workerPool := workers.NewWorkerPool(100, q, orderRepo)
 	workerPool.StartCreateOrderWorkers()
 	workerPool.StartProccessOrderWorkers()
 	orderManager.LoadUpUnproccessed()

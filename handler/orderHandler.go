@@ -27,7 +27,7 @@ func NewOrderhandler(orderManager manager.OrderManager) OrderHandler {
 func (ord OrderHandler) GetOrders(c *gin.Context) {
 
 	id := c.Param("id")
-	fmt.Println("Received order id ", id)
+	// fmt.Println("Received order id ", id)
 	// if err != nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	// 	return

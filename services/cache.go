@@ -1,3 +1,5 @@
 package services
 
-var CacheReceivedOrder map[string]bool
+import "github.com/alphadose/haxmap"
+
+var CacheReceivedOrders *haxmap.Map[string, bool]

@@ -32,7 +32,7 @@ func (o OrderManager) AcceptOrder(ord models.Order) (orderId string, err error) 
 	ord.ID = orderId
 	ord.OrderReceived = time.Now()
 	// err = o.repo.CreateOrder(ord)
-	services.CacheReceivedOrder[orderId] = true
+	services.CacheReceivedOrders.Set(orderId, true)
 	o.q.PendingQueue <- ord
 	return
 }
