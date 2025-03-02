@@ -24,7 +24,7 @@ func GetConnections(db string) (dbobj *gorm.DB) {
 
 func getGormObjpostgres() (db *gorm.DB) {
 	// Define PostgreSQL connection details
-	dsn := "host=localhost user=myuser password=mypassword dbname=mydatabase port=5432 sslmode=disable"
+	dsn := "host=postgres user=myuser password=mypassword dbname=mydatabase port=5432 sslmode=disable"
 
 	// Open a connection to PostgreSQL
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{

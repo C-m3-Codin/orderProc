@@ -15,7 +15,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o /my-go-app
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /my-go-app
 
 # Step 2: Create the final container with only the necessary files
 # Use a minimal base image for the final container
@@ -31,4 +31,5 @@ COPY --from=build /my-go-app .
 # EXPOSE 8080
 
 # Command to run the Go app
-CMD ["/root/my-go-app"]
+CMD ["./my-go-app"]
+# CMD ["sleep", "infinity"]
