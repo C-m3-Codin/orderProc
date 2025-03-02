@@ -2,10 +2,13 @@ package services
 
 import (
 	"c-m3-codin/ordProc/models"
+	"log"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func GetConnections(db string) (dbobj *gorm.DB) {
@@ -26,10 +29,22 @@ func getGormObjpostgres() (db *gorm.DB) {
 	// Open a connection to PostgreSQL
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
+		Logger:                 logger.Default.LogMode(logger.Info),
 	})
 	if err != nil {
 		panic("failed to connect to the database")
 	}
+
+	sqlDB, err := db.DB()
+	if err != nil {
+		log.Fatalf("Error getting *sql.DB object: %v", err)
+	}
+
+	// Set connection pool parameters
+	sqlDB.SetMaxOpenConns(100)                 // Maximum number of open connections
+	sqlDB.SetMaxIdleConns(20)                  // Maximum number of idle connections
+	sqlDB.SetConnMaxLifetime(10 * time.Minute) // Maximum time a connection can be reused
+
 	return
 }
 

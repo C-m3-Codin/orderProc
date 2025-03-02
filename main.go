@@ -45,6 +45,7 @@ func main() {
 	r.GET("/ping", handler.Ping)
 	r.GET("/order/:id", orderHandler.GetOrders)
 	r.POST("/order", orderHandler.PostOrders)
+	r.GET("/metrics", orderHandler.GetMetrics)
 	r.Run() // listen and serve on 0.0.0.0:8080
 
 }
