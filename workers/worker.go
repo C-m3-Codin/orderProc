@@ -27,7 +27,7 @@ func NewWorkerPool(count int, q services.Queue, orderRepo repository.OrderRepo) 
 }
 
 func (wp WorkerPool) StartCreateOrderWorkers() {
-	for i := range wp.WorkerCount {
+	for i := range 1000 {
 		go wp.ListenForOrders(i)
 	}
 	return
