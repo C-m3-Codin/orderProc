@@ -2,10 +2,13 @@ package models
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Order struct {
-	ID                   string `gorm:"column:id;primaryKey;" json:"id" validate:"required"`
+	// ID                   string `gorm:"column:id;primaryKey;" json:"id" validate:"required"`
+	ID                   uuid.UUID `gorm:"column:id;primaryKey;type:uuid;" json:"id" validate:"required"`
 	User_id              string
 	Item_ids             string
 	Total_amount         float32

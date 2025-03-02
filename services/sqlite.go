@@ -24,7 +24,9 @@ func getGormObjpostgres() (db *gorm.DB) {
 	dsn := "host=localhost user=myuser password=mypassword dbname=mydatabase port=5432 sslmode=disable"
 
 	// Open a connection to PostgreSQL
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
 	if err != nil {
 		panic("failed to connect to the database")
 	}

@@ -28,8 +28,9 @@ func NewOrderhandler(repo repository.OrderRepo, q services.Queue) OrderManager {
 }
 
 func (o OrderManager) AcceptOrder(ord models.Order) (orderId string, err error) {
-	orderId = uuid.NewString()
-	ord.ID = orderId
+	odId := uuid.New()
+	orderId = odId.String()
+	ord.ID = odId
 	ord.OrderReceived = time.Now()
 	// err = o.repo.CreateOrder(ord)
 	services.CacheReceivedOrders.Set(orderId, true)

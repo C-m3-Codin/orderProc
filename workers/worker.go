@@ -63,7 +63,7 @@ func (wp WorkerPool) ListenForOrders(workerID int) {
 			// fmt.Println("Error Creating order, requeuing:", ord)
 			wp.Q.PendingQueue <- ord
 		} else {
-			services.CacheReceivedOrders.Del(ord.ID)
+			services.CacheReceivedOrders.Del(ord.ID.String())
 			wp.Q.Processing <- ord
 		}
 	}

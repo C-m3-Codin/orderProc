@@ -2,8 +2,8 @@ package repository
 
 import (
 	"c-m3-codin/ordProc/models"
-	"fmt"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -21,8 +21,11 @@ func NewOrderRepo(db *gorm.DB) OrderRepo {
 }
 
 func (orderRep OrderRepo) GetOrder(orderId string) (order models.Order, err error) {
-	order.ID = orderId
-	fmt.Println(order)
+	order.ID, err = uuid.Parse(orderId)
+	if err != nil {
+		return
+	}
+	// fmt.Println(order)
 	err = orderRep.DB.First(&order).Error
 
 	return
