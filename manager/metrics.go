@@ -48,8 +48,8 @@ func (o OrderManager) GetAverageProcessingTimeCount() (metrics models.Metrics, e
 
 func (o OrderManager) GetAllMetrics() (metrics models.Metrics, err error) {
 	fmt.Println("got here")
-	metrics.PendingCount = int64(len(o.q.PendingQueue))
 	totalTime, err := o.repo.GetAverageProcessingTimeCount()
+	metrics.PendingCount = int64(len(o.q.PendingQueue))
 	if err != nil {
 		fmt.Println("error o.repo.GetAverageProcessingTimeCount()")
 		return

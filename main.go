@@ -26,7 +26,7 @@ func main() {
 	orderRepo := repository.NewOrderRepo(db)
 	orderManager := manager.NewOrderhandler(orderRepo, q)
 	orderHandler := handler.NewOrderhandler(orderManager)
-	workerPool := workers.NewWorkerPool(100, q, orderRepo)
+	workerPool := workers.NewWorkerPool(1000, q, orderRepo)
 	workerPool.StartCreateOrderWorkers()
 	workerPool.StartProccessOrderWorkers()
 	orderManager.LoadUpUnproccessed()
